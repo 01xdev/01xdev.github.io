@@ -1,6 +1,10 @@
 
 .head .title{
-    padding: 110px 35px 100px;
+    padding: calc(2rem + 2.9vw) 0 calc(2rem + 4.2vw);
+}
+
+.head .logo{
+    max-width: 60px;
 }
 .head h1{
     font-size: 70px;
@@ -13,6 +17,16 @@
     font-size: 1.6rem;
     line-height: 1.3;
     font-weight: 400;
+}
+.tag{
+    color:#fff;
+    text-decoration: none;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #fff;
+}
+.tag:hover{
+    color:#fff;
+    border-bottom: 1px solid #fff;
 }
 @media only screen and (max-width: 767px){
     .head h1{
