@@ -4,7 +4,7 @@
 }
 
 .head .logo{
-    max-width: 60px;
+    max-width: 50px;
 }
 .head h1{
     font-size: 70px;
@@ -29,7 +29,18 @@
     border-bottom: 1px solid #fff;
 }
 .content{
-    font-size: 20px;
+    font-size: 16px;
+}
+.content h3{
+    margin: 25px 0;
+}
+
+.content h2{
+    margin: 35px 0;
+}
+
+div.highlight{
+    padding : 25px 25px 10px 25px;
 }
 @media only screen and (max-width: 767px){
     .head h1{
