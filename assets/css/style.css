@@ -1,6 +1,6 @@
 
 .head .title{
-    padding: calc(2rem + 2.9vw) 0 calc(2rem + 4.2vw);
+    padding: calc(2rem + 2.9vw) 0 calc(4rem + 4.2vw);
 }
 
 .head .logo{
@@ -8,7 +8,7 @@
 }
 .head h1{
     font-size: 70px;
-    line-height: 80px;
+    line-height: 72px;
     font-weight: 600;
     font-family: 'Crimson Pro', serif;
 }
@@ -28,11 +28,15 @@
     color:#fff;
     border-bottom: 1px solid #fff;
 }
+.content{
+    font-size: 20px;
+}
 @media only screen and (max-width: 767px){
     .head h1{
         font-size: 42px;
-        line-height: 50px;
+        line-height: 43px;
         font-weight: 800;
+        margin-bottom: 35px;
     }
     .sub{
         padding: 60px 35px 60px;
