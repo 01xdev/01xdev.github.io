@@ -87,6 +87,18 @@ div.highlight{
     margin-bottom: 40px;
 }
 
+.navbar-dark .nav-link{
+    font-family: 'Crimson Pro', serif;
+    font-size: 24px;
+    color:#fff;
+}
+
+.nav-link{
+    font-family: 'Crimson Pro', serif;
+    font-size: 24px;
+    color:#000;
+}
+
 @media only screen and (max-width: 767px){
     .head h1{
         font-size: 42px;

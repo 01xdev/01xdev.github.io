@@ -1,0 +1,4 @@
+---
+layout: collections
+title:  "Collections"
+---
