@@ -56,6 +56,9 @@ div.highlight{
 .footerlogo{
     max-width: 100px;
 }
+.post{
+    transition:0.5ms all cubic-bezier(1, 0, 0, 1);
+}
 .posts h1{
     font-family: 'Crimson Pro', serif;
 }

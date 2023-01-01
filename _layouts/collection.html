@@ -31,13 +31,13 @@
     </div>
     <div class="container p-3 mt-5 posts">
             <h1>Articles.</h1>
-            {% for post in site.tags[page.collection] %}
-            <a href="{{ post.url }}" class="d-block p-4 border-bottom post">
+            {% for post in site.tags[page.collection] reversed %}
+            <a href="{{ post.url }}" class="d-block p-4 border-bottom border-dark post">
                 {{ post.title }}
             </a>  
             {% endfor %}    
     </div>
-    <div class="container pt-4 collection-body">
+    <div class="container mt-5 mb-4 collection-body">
         {{content}}
     </div>
     <div class="container-fluid bg-black text-white border-bottom border-dark px-3 py-5 mt-5">

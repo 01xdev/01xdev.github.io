@@ -60,7 +60,7 @@ Now we can construct a *Simple Factory* as:
 ```java
 public interface BeanFactory {
     public void registerBean(String name,Object instance);
-    public Object getBean(String beanName);
+    public Bean getBean(String beanName);
 }
 ```
 
@@ -69,11 +69,11 @@ We can give an object for management as follows:
 beanFactory.registerBean("UserService",new UserService());
 beanFactory.registerBean("UserRepository", new UserRepository());
 ```
-This should create `Bean`s against `UserService` and `UserRepository`. The instances stored in the beans should be retrieved by mentioning the name passed while registering beans.
+This should create `Bean`s against `UserService` and `UserRepository`. The beans should be retrieved by mentioning the name passed while registering.
 
 ```java
-UserService userService = (UserService)beanFactory.getBean("UserService");
-UserRepository userRepository = (UserRepository) beanFactory.getBean("UserRepository");
+UserService userService = (UserService)beanFactory.getBean("UserService").instance;
+UserRepository userRepository = (UserRepository) beanFactory.getBean("UserRepository").instance;
 ```
 
 For storing and retreiving beans against a name, we can use a `HashMap<String,Bean>`.
@@ -97,10 +97,10 @@ public class SimpleBeanFactory implements BeanFactory{
     }
 
     @Override
-    public Object getBean(String beanName) {
+    public Bean getBean(String beanName) {
        Bean bean = Optional.ofNullable(beanContainer.get(beanName))
                .orElseThrow(()->new RuntimeException("Bean not found"));
-       return bean.instance;
+       return bean;
     }
 }
 
@@ -119,8 +119,8 @@ public void configure(){
     
     // Wiring beans
     // Obtaining userRepository and userService from bean factory
-    UserRepository userRepository = (UserRepository) beanFactory.getBean("UserRepository");
-    UserService userService = (UserService)beanFactory.getBean("UserService");
+    UserRepository userRepository = (UserRepository) beanFactory.getBean("UserRepository").instance;
+    UserService userService = (UserService)beanFactory.getBean("UserService").instance;
     // Using setter injection to add 
     userService.setUserRepository(userRepository);
 }
@@ -247,7 +247,7 @@ public class XMLBeanFactory implements BeanFactory {
     }
 
     @Override
-    public Object getBean(String beanName) {
+    public Bean getBean(String beanName) {
         return simpleBeanFactory.getBean(beanName);
     }
 }
@@ -263,14 +263,14 @@ public void configure(){
     beanFactory = new XMLBeanFactory("beans.xml");
     
     // wiring beans
-    UserRepository userRepository = (UserRepository) beanFactory.getBean("UserRepository");
-    UserService userService = (UserService)beanFactory.getBean("UserService");
+    UserRepository userRepository = (UserRepository) beanFactory.getBean("UserRepository").instance;
+    UserService userService = (UserService)beanFactory.getBean("UserService").instance;
     userService.setUserRepository(userRepository);
 }
 ```
 Once configured, the dependencies can be obtained like so:
 ```java
 beanFactory = XMLBeanFactory.getInstance();
-UserService userService = (UserService) beanFactory.getBean("UserService");
+UserService userService = (UserService) beanFactory.getBean("UserService").instance;
 ```
 

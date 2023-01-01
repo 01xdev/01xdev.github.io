@@ -16,7 +16,9 @@
     <div class="container-fluid head bg-black text-white border-bottom border-dark px-3">
         <div class="container-fluid px-0">
             <div class="container py-3 px-0">
-                <img src="/assets/images/logo.png" class="logo" alt="1xdev" />
+                <a href="https://1xdev.in/">
+                    <img src="/assets/images/logo.png" class="logo" alt="1xdev" />
+                </a>
             </div>
         </div>
         <div class="title container">
@@ -25,7 +27,7 @@
             </div>
             <img src="/assets/images/collection.png" alt="" srcset="">
             {% for tag in page.tags %}
-            <a href="#{{ tag[0] | slugify }}" class="tag">{{ tag }}</a>
+            <a href="{{ site.baseurl }}/collections/{{ tag | slugify }}" class="tag">{{ tag }}</a>
             {% endfor %}
         </div>
     </div>
