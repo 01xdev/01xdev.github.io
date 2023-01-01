@@ -92,11 +92,19 @@ div.highlight{
     font-size: 24px;
     color:#fff;
 }
-
 .nav-link{
     font-family: 'Crimson Pro', serif;
     font-size: 24px;
     color:#000;
+}
+.hero{
+    padding-top:140px;
+    padding-bottom:140px;
+}
+.hero h1{
+    font-family: 'Crimson Pro';
+    font-size: 3em;
+    line-height: .9;
 }
 
 @media only screen and (max-width: 767px){
@@ -110,5 +118,10 @@ div.highlight{
         font-size: 1.2rem;
         line-height: 1.4;
         font-weight: 400;
+    }
+    .hero h1{
+        font-family: 'Crimson Pro';
+        font-size: 1.4em;
+        line-height: .9;
     }
 }
