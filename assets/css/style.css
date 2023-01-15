@@ -99,7 +99,7 @@ div.highlight{
 }
 .hero{
     padding-top:70px;
-    padding-bottom:90px;
+    padding-bottom:100px;
 }
 .hero h2{
     font-weight: 300;
@@ -109,7 +109,7 @@ div.highlight{
     font-size: 100px;
     line-height: .9;
 }
-.title{
+.section-title{
     font-family: 'Crimson Pro';
     font-size: 60px;
     transform: translateY(-55%);
@@ -134,7 +134,7 @@ div.highlight{
         font-size: 55px;
         line-height: .9;
     }
-    .title{
+    .section-title{
         font-size: 30px;
     }
 }
