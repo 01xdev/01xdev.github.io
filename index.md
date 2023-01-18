@@ -1,4 +1,4 @@
 ---
 layout: home
-title:  "index"
+title:  "1xdev"
 ---
