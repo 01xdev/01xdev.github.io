@@ -12,7 +12,7 @@ An example for IoC would be callbacks for UI events. Consider the following code
 
 ```java
 JButton submit = new JButton("submit");
-b.addActionListener(new ActionListener() {
+.addActionListener(new ActionListener() {
     @Override
     public void actionPerformed(ActionEvent e) {
         //custom code to be run on click
@@ -28,10 +28,8 @@ Inversion of Control has a slightly different meaning in context of IoC containe
 
 # Setter Injection
 
-In the previous article, we created a framework that manages beans for us. In this article we will be focusing on wiring these beans together.
-
-As discussed in the first article there are several approaches to injecting beans. Most straightforward approach would be setter injection.
-
+In the previous article, we created a framework that manages beans for us. In this article, we will be focusing on wiring these beans together.
+As discussed in the first article there are several approaches to injecting beans. The most straightforward approach would be setter injection.
 Consider the following config file for our DI framework:
 
 ```xml
@@ -43,8 +41,7 @@ Consider the following config file for our DI framework:
 </Beans>
 ```
 
-We have defined the `UserRepository` and `UserService` bean as before.The only difference we is that  the `UserService` now has a `setter` node as child.
-
+We have defined the `UserRepository` and `UserService` bean as before. The only difference is that the `UserService` now has a `setter` node as a child.
 The `UserRepository` class is designed like so:
 
 ```java
@@ -60,30 +57,29 @@ public class UserService {
     }
 }
 ```
-
-The `setUserRepository` accepts an instance of `UserRepository`, which it later persists in the `userRepository` field. All our framework have to do is invoke this method with a `UserRepository` bean
+The `setUserRepository `accepts an instance of `UserRepository`, which it later persists in the `userRepository field`. All our framework has to do is invoke this method with a `UserRepository` bean.
 
 The config
 ```xml
- <Bean name="UserService" classname="in.onexdev.testScenarios.UserService">
+<Bean name="UserService" classname="in.onexdev.testScenarios.UserService">
         <setter name="setUserRepository" bean="UserRepository"/>
 </Bean>
 ```
-can be roughly translated as 
-* Create an instance of `UserService`
-* Invoke the setter method `setUserRepository` method with `UserRepository` bean as argument.
+can be roughly translated as:
 
-To acheive this, our DI framework should traverse through each `Bean` node in parsed xml document. If any `Bean` node has a `setter` child node, the framwork uses java reflection to call corresponding setter method with the given argument.
+* Create an instance of UserService
+* Invoke the setter method setUserRepository method with UserRepository bean as an argument.
 
-The layout of our framwork is mostly unchanged
+To achieve this, our DI framework should traverse through each Bean node in the parsed xml document. If any `Bean` node has a `setter` child node, the framework uses java reflection to call the corresponding setter method with the given argument.
 
+The layout of our framework is mostly unchanged
 ```java
  public XMLBeanFactory(String xmlPath) {
-    // initalize a SimpleBeanFactory
+    // initialize a SimpleBeanFactory
     simpleBeanFactory = new SimpleBeanFactory();
     // parse the bean configuration XML
     Document document = parseXmlDocument(xmlPath);
-    // obtain all Bean nodes in file
+    // obtain all Bean nodes in the file
     NodeList beans = document.getElementsByTagName("Bean");
     // register all beans to the SimpleBeanFactory
     registerBeansFromNodeList(beans);
@@ -91,8 +87,7 @@ The layout of our framwork is mostly unchanged
     instance = this;
 }
 ```
- 
-The `registerBeansFromNodeList` method has following implementation :
+The `registerBeansFromNodeList` method has the following implementation :
 ```java
 private void registerBeansFromNodeList(NodeList beanNodes){
     // Iterate through beans
@@ -112,11 +107,8 @@ private void registerBeansFromNodeList(NodeList beanNodes){
         simpleBeanFactory.registerBean(beanName,instance);
     }
 }
-
 ```
-
-As you can see, we have intoduced a new method, `injectSetterDependencies(instance, beanNode)` 
-
+As you can see, we have introduced a new method, `injectSetterDependencies(instance, beanNode)`
 ```java
 private  void injectSetterDependencies(Object instance, Node beanNode)  {
     // get all "setter" child nodes of a Bean node
@@ -139,9 +131,7 @@ private  void injectSetterDependencies(Object instance, Node beanNode)  {
     }
 }
 ```
-
 We can now test our code as :
-
 ```java
 beanFactory = XMLBeanFactory.getInstance();
 
@@ -151,16 +141,14 @@ User userDetails = userService.getUserDetails(10L);
 assertEquals(userDetails.getAge(), 25);
 ```
 
-We are directly invoking `getUserDetails` method from `userService` instance obtained from the framework. The framework has taken care of binding `userRepository` into `UserService`.
-
+We are directly invoking the `getUserDetails` method from the `userService` instance obtained from the framework. The framework has taken care of binding the `userRepository` into UserService.
 
 ---
 
 # Constructor Injection
+In Constructor Injection, the dependencies have to be wired in while initializing the bean.
+Consider the following code for UserService
 
-In Contructor Injection, the dependencies have to be wired in while initialising the bean.
-
-Consider the following code for `UserService`
 ```java
 public class UserService {
     private UserRepository userRepository;
@@ -175,10 +163,8 @@ public class UserService {
     }
 }
 ```
-
-The `UserService` class has to be initialised using the `UserService(UserRepository userRepository)` constructor. Our DI framework will be responsible for calling this constructor with appropriate bean as argument.
-
-An xml configuration for the same can be created as : 
+The `UserService` class has to be initialized using the `UserService(UserRepository userRepository)` constructor. Our DI framework will be responsible for calling this constructor with the appropriate bean as an argument.
+An xml configuration for the same can be created as :
 ```xml
 <Beans>
     <Bean name="UserRepository" classname="in.onexdev.testScenarios.contructorinjection.UserRepository" />
@@ -190,9 +176,7 @@ An xml configuration for the same can be created as :
 </Beans>
 ```
 The `constructor` tag indicates `UserService` bean requires Constructor Injection. Arguments for the constructor should be listed as `arg` child nodes of the Bean.
-
-The code for `registerBeansFromNodeList` method is almost same as before except the bean intialization is now moved to a new  `registerBeansFromNodeList` method.
-
+The code for `registerBeansFromNodeList` method is almost the same as before except the bean initialization is now moved to a new `initializeBean` method.
 ```java
 private void initializeBean(NodeList beanNodes){
     // Iterate through beans
@@ -213,11 +197,8 @@ private void initializeBean(NodeList beanNodes){
         simpleBeanFactory.registerBean(beanName,instance);
     }
 }
-
 ```
-
 The `initializeBean` will check if the Bean has a custom constructor. The custom constructor will be called if there is one. Else, the default constructor will be called.
-
 ```java
  private  Object initializeBean(String classname, Node beanNode) {
     NodeList constructorNodes = ((Element)beanNode).getElementsByTagName("constructor");
@@ -237,7 +218,6 @@ The `initializeBean` will check if the Bean has a custom constructor. The custom
 }
 ```
 The `instantiateClassUsingConstructor` method works as follows:
-
 ```java
     private Object instantiateClassUsingConstructor(String classname, NodeList constructorNodes) {
         Object beanInstance;
@@ -259,6 +239,24 @@ The `instantiateClassUsingConstructor` method works as follows:
     }
 
 ```
+
+`getArgumentBeansOfConstructor(argumentNodes)` obtains beans of dependencies from our bean factory
+```java
+ private List<Bean> getArgumentBeansOfConstructor(NodeList argumentNodes) {
+        List<Bean> argumentBeans = new ArrayList();
+        // Iterate through arguments
+        for(int i = 0; i< argumentNodes.getLength(); i++){
+            Node argumentNode = argumentNodes.item(i);
+            // Get bean name
+            String beanName = argumentNode.getAttributes().getNamedItem("bean").getTextContent();
+            // Obtain bean corresponding to name from bean factory
+            Bean bean = simpleBeanFactory.getBean(beanName);
+            argumentBeans.add(bean);
+        }
+        return argumentBeans;
+    }
+``` 
+
 
 We will be using the `getConstructor` method on Java Relfection API to obtain the Constructor. This method uses parameter types to locate the constructor. Which can be obtained as :
 
