@@ -7,6 +7,10 @@
     padding: calc(2rem + 2.9vw) 0 calc(4rem);
 }
 
+.head .collection-title h2{
+    font-weight: 300;
+}
+
 .head .collection-sub{
     font-size: 1.4rem;
 }
@@ -117,7 +121,7 @@ div.highlight{
     padding-inline: 20px;
     background: white;
     position: absolute;
-    right: 10px;
+    right: 25px;
 }
 
 .item .heading{
